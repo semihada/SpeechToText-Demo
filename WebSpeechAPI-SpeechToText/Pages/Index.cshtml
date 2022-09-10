@@ -1,0 +1,67 @@
+﻿@page
+@model IndexModel
+@{
+    ViewData["Title"] = "Home page";
+}
+
+<div>
+    <div class="head text-center mb-5">
+        <h3>
+            Web Speech API Demo
+        </h3>
+    </div>
+    <!-- Select List Dropdown Start -->
+    <select class="form-select mt-4 mb-2" name="selectLanguage" id="select_language" value="@(ViewData["language"])" onchange="submitButton();">
+
+        @{
+            String[] langs = { "select-SL", "en-US", "pt-PT", "fr-FR", "tr-TR" };
+            String[] langnames = { "Select a Language", "English", "Portuguese", "French", "Turkish" };
+
+            // Loop for the dropdown menu - preserving the selected item
+            for (var i = 0; i < langs.Length; i++)
+
+                if ((ViewData["language"] != null) && (ViewData["language"].ToString() == langs[i]))
+                {
+                    <option value=@langs[i] selected>@langnames[i]</option>
+                }
+                else
+                {
+                    <option value=@langs[i]>@langnames[i]</option>
+                }
+        }
+        }
+    </select>
+    <!-- Select List Dropdown End -->
+
+    <div class="row">
+        <!-- Input Area Start -->
+        <div class="col-md-6 mb-3">
+            <span class=" d-flex flex-column">
+                <textarea name="textIn" class="form-control h-200px mb-1" id="text-input"
+                          placeholder="Type in text." onchange="submitButton();">@ViewData["TextIn"]</textarea>
+                <span class="bg-white py-1 px-2 d-flex">
+                    <span class="ms-auto">
+                        <!-- Microphone Button Start -->
+                        <button class="bg-white border-0" id="start" value="false" onclick="buttonToggle();" type="button">
+                            <i class="fa-solid fa-microphone" id="start_img"></i>
+                            <i class="fa-solid fa-microphone-slash" id="stop_img" style="display: none;"></i>
+                            <!-- Microphone Button End -->
+                        </button>
+                    </span>
+                </span>
+            </span>
+        </div>
+        <!-- Input Area End -->
+        <!-- Output Area Start -->
+        <div class="col-md-6 h-200px border-start">
+            <pre class="border h-200px fw-lighter bg-white pre-scrollable" id="text-output">@ViewData["TextOut"]</pre>
+        </div>
+        <!-- Output Area End -->
+
+        <!--Status Start-->
+            <div class="d-flex w-50 mt-1">
+                <p class="ms-auto me-3" id="status"></p>
+            </div>
+        <!--Status End-->
+    </div>
+</div>
