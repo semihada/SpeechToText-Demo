@@ -1,6 +1,10 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using static System.Net.Mime.MediaTypeNames;
+using RestSharp;
+using RestSharp.Authenticators;
+using Newtonsoft.Json;
+using System.Xml;
 
 namespace WebSpeechAPI_SpeechToText.Pages
 {
@@ -29,7 +33,36 @@ namespace WebSpeechAPI_SpeechToText.Pages
             {
                 // Function that gets response and
                 // changes ViewData["textOut"]
+                await getResponseDemo(textIn, selectLanguage);
             }
+        }
+
+        private async Task getResponseDemo(String text, String language)
+        {
+            // Assign Secrets
+            string username = "demoUsername";
+            string pw = "demoPassword";
+
+            // Assign Endpoint Addresses
+            string baseAdress = "https://dummy.restapiexample.com/api/v1";
+            string requestAddress = "/employees";
+
+            // Initialize Request
+            var client = new RestClient(baseAdress)
+            {
+                Authenticator = new HttpBasicAuthenticator(username, pw)
+            };
+            var request = new RestRequest(requestAddress, Method.Get);
+
+            var response = client.Execute(request);
+
+            // Beautify response
+            var parsedJson = JsonConvert.DeserializeObject(response.Content);
+            var json = JsonConvert.SerializeObject(parsedJson, Newtonsoft.Json.Formatting.Indented);
+
+            // Print beautified response to screen
+            ViewData["TextOut"] = json;
+
         }
     }
 }

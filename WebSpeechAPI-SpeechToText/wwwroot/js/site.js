@@ -98,8 +98,7 @@ if ("webkitSpeechRecognition" in window) {
 
 } else {
     document.querySelector("#start_img").style.display = "none";
-    pDOM = 
-    console.log("Speech Recognition Not Available")
+    document.querySelector("#status").innerHTML = "Speech Recognition Not Available on This Browser | Use Google Chrome";
 }
 
 function submitButton() {
