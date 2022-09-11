@@ -12,7 +12,13 @@ namespace WebSpeechAPI_SpeechToText.Pages
             _logger = logger;
         }
 
+        // On Refresh - On First Page Open
         public void OnGet()
+        {
+
+        }
+        // On Submission of Form submitText
+        public void OnPostSubmitTextAsync(String textIn, String selectLanguage)
         {
 
         }
